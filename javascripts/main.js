@@ -35,7 +35,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
 
 }]);
 
-app.controller('apiController', ['$scope', 'apiStatus' function ($scope, apiStatus) {
+app.controller('apiController', ['$scope', 'apiStatus', function ($scope, apiStatus) {
 
 	$scope.data = apiStatus.data;
 
