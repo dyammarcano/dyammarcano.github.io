@@ -6,7 +6,12 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
 
   $stateProvider.state('home', {
     url:'/',
-    templateUrl: 'views/homepage.html'
+    templateUrl: 'views/homepage.html',
+    controller: 'homeController'
   });
 
+}]);
+
+app.controller('homeController', ['$scope', '$timeout', '$http', function ($scope, $timeout, $http) {
+	
 }]);
