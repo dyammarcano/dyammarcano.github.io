@@ -1,2 +1,2 @@
 # web site
-a [dyammarcano](https://dyammarcano.github.io)
+a [https://dyammarcano.github.io](https://dyammarcano.github.io)
