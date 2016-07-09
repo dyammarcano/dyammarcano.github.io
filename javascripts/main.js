@@ -6,9 +6,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
 
   $stateProvider.state('home', {
     url:'/',
-    'content': {
-      templateUrl: 'views/homepage.html',
-    }
+    templateUrl: 'views/homepage.html'
   });
 
 }]);
