@@ -4,6 +4,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
 
   $urlRouterProvider.otherwise('/home');
 
+
   $stateProvider.state('home', {
     url:'/home',
     views: {
@@ -14,10 +15,15 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
     }
   });
 
+
   $stateProvider.state('api', {
     url:'/api',
-    template: 'views/api.html',
-    controller: 'apiController',
+    views: {
+    	"main": {
+	    	template: 'views/api.html',
+	    	controller: 'apiController',
+    	}
+    },   
     resolve : {
       apiStatus: function ($http) {
         return $http.get('../api.json').then(function (response) {
@@ -30,9 +36,13 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
 }]);
 
 app.controller('apiController', ['$scope', 'apiStatus' function ($scope, apiStatus) {
+
 	$scope.data = apiStatus.data;
+
 }]);
 
+
 app.controller('homeController', ['$scope', function ($scope) {
+	
 	
 }]);
