@@ -18,19 +18,19 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
 
   $stateProvider.state('api', {
     url:'/api',
-    views: {
-    	"main": {
-	    	template: 'views/api.html',
-	    	controller: 'apiController',
-    	}
-    },   
     resolve : {
       apiStatus: function ($http) {
         return $http.get('../api.json').then(function (response) {
           return response;
         });
       }
-    }
+    },
+    views: {
+    	"main": {
+	    	template: 'views/api.html',
+	    	controller: 'apiController',
+    	}
+    }   
   });
 
 }]);
@@ -44,5 +44,5 @@ app.controller('apiController', ['$scope', 'apiStatus' function ($scope, apiStat
 
 app.controller('homeController', ['$scope', function ($scope) {
 	
-	
+
 }]);
