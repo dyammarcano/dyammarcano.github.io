@@ -489,8 +489,9 @@ header h2 {
 }
 
 #main-content {
-  float: left;
-  width: 690px;
+  width: 753px;
+  padding-left: 100px;
+  text-align: justify;
 }
 
 #main-content img {

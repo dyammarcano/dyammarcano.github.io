@@ -1,0 +1,11 @@
+@font-face {
+    font-family: 'Architects Daughter';
+    font-style: normal;
+    font-weight: 400;
+    src: url(Architects+Daughter_400_normal.eot); /* {{embedded-opentype-gf-url}} */
+    src: local('☺'),
+        url(Architects+Daughter_400_normal.eot?#iefix) format('embedded-opentype'), /* {{embedded-opentype-gf-url}} */
+        url(Architects+Daughter_400_normal.woff) format('woff'), /* http://fonts.gstatic.com/s/architectsdaughter/v6/RXTgOOQ9AAtaVOHxx0IUBOkI_DLF4EgbZt3mhU8gQFo.woff */
+        url(Architects+Daughter_400_normal.ttf) format('truetype'), /* http://fonts.gstatic.com/s/architectsdaughter/v6/RXTgOOQ9AAtaVOHxx0IUBF5f9YK0z_CKegLiCihVlJo.ttf */
+        url(Architects+Daughter_400_normal.svg#Architects+Daughter_400_normal) format('svg'); /* http://fonts.gstatic.com/l/font?kit=RXTgOOQ9AAtaVOHxx0IUBJ3EXhB8GVxcFukvVU0W_9E&skey=d34ee9a1a308e98b&v=v6#ArchitectsDaughter */
+}
