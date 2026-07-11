@@ -1,14 +1,15 @@
 # Dyam Marcano
 
-> Senior Backend Engineer based in São Paulo, Brazil. 10+ years building high-scale, fault-tolerant distributed systems for financial institutions, processing 20M+ transactions per day. Deep expertise in Go, Java, application security, PCI-DSS and Bacen/PIX regulatory compliance, and Go + AI/LLM tooling.
+> Senior Backend Engineer based in São Paulo, Brazil. 10+ years building high-scale, fault-tolerant distributed systems for financial institutions — from banks to the Brazilian stock market (B3) — with products handling 10M+ operations and platforms processing 20M+ transactions per day. Cross-functional engineer at Itaú Unibanco. Deep expertise in Go, Java, application security, PCI-DSS and Bacen/PIX regulatory compliance, legacy-to-Go modernization, and Go + AI/LLM tooling.
 
 ## Profile
 
 - **Name:** Dyam Marcano
 - **Role:** Senior Backend Engineer
 - **Location:** São Paulo, Brazil
-- **Experience:** 10+ years; fintech (Itaú Unibanco, B3, Banco Caroni)
-- **Scale:** high-availability platforms processing 20M+ transactions/day
+- **Experience:** 10+ years; fintech — banks and the stock market (Itaú Unibanco, B3, Banco Caroni)
+- **Scale:** stock-market products at 10M+ operations/day; platforms processing 20M+ transactions/day
+- **Notable work:** cross-functional engineer at Itaú Unibanco; modernizing legacy services by porting them to Go on Kubernetes
 - **Languages spoken:** Portuguese (native), Spanish (native), English (professional)
 
 ## Core skills
