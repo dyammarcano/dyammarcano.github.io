@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dyam Marcano — Software Engineer</title>
+  <meta name="description" content="Dyam Marcano — Software Engineer in São Paulo, Brazil. Go, Java, Rust, WebAssembly and AI/LLM tooling. Clean Architecture, SOLID, Design Patterns." />
+  <meta name="author" content="Dyam Marcano" />
+  <link rel="canonical" href="https://dyammarcano.github.io/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Dyam Marcano — Software Engineer" />
+  <meta property="og:description" content="Go · Java · Rust · WebAssembly · AI/LLMs. Building CLIs, distributed backends and security-research tooling." />
+  <meta property="og:url" content="https://dyammarcano.github.io/" />
+  <meta name="twitter:card" content="summary" />
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>%F0%9F%91%A8%E2%80%8D%F0%9F%92%BB</text></svg>" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg:        #1a1b26;
+      --bg-alt:    #1f2335;
+      --card:      #24283b;
+      --card-hi:   #2a2f45;
+      --border:    #2f344d;
+      --fg:        #c0caf5;
+      --fg-dim:    #9aa5ce;
+      --muted:     #565f89;
+      --blue:      #7aa2f7;
+      --cyan:      #7dcfff;
+      --green:     #9ece6a;
+      --purple:    #bb9af7;
+      --orange:    #ff9e64;
+      --red:       #f7768e;
+      --font-sans: "Space Grotesk", ui-sans-serif, system-ui, -apple-system, sans-serif;
+      --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+      --max: 960px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--font-sans);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      overflow-x: hidden;
+    }
+
+    /* ambient grid + glow */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background:
+        radial-gradient(600px circle at 15% -5%, rgba(122,162,247,0.14), transparent 45%),
+        radial-gradient(700px circle at 100% 0%, rgba(187,154,247,0.10), transparent 45%);
+    }
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 46px 46px;
+      opacity: 0.16;
+      mask-image: radial-gradient(circle at 50% 0%, black, transparent 70%);
+      -webkit-mask-image: radial-gradient(circle at 50% 0%, black, transparent 70%);
+    }
+
+    a { color: var(--cyan); text-decoration: none; transition: color .15s ease; }
+    a:hover { color: var(--fg); }
+
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+
+    /* ---------- header ---------- */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(10px);
+      background: rgba(26,27,38,0.72);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+    .brand { font-weight: 700; letter-spacing: .3px; color: var(--fg); }
+    .brand .dot { color: var(--green); }
+    .nav-links { display: flex; gap: 26px; font-size: .95rem; }
+    .nav-links a { color: var(--fg-dim); }
+    .nav-links a:hover { color: var(--blue); }
+    @media (max-width: 620px) { .nav-links { display: none; } }
+
+    /* ---------- hero ---------- */
+    .hero { padding: 96px 0 72px; }
+    .hero .kicker {
+      font-family: var(--font-mono);
+      font-size: .9rem;
+      color: var(--green);
+      margin-bottom: 18px;
+      opacity: 0;
+      animation: fade-up .6s ease forwards;
+    }
+    .hero h1 {
+      font-size: clamp(2.6rem, 8vw, 4.6rem);
+      line-height: 1.02;
+      font-weight: 700;
+      letter-spacing: -1.5px;
+      color: #fff;
+      opacity: 0;
+      animation: fade-up .6s ease .08s forwards;
+    }
+    .hero h1 .grad {
+      background: linear-gradient(120deg, var(--blue), var(--purple) 55%, var(--cyan));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero .role {
+      margin-top: 16px;
+      font-size: clamp(1.05rem, 3vw, 1.4rem);
+      color: var(--fg-dim);
+      opacity: 0;
+      animation: fade-up .6s ease .16s forwards;
+    }
+    .hero .role .sep { color: var(--muted); margin: 0 10px; }
+    .hero p.lead {
+      margin-top: 22px;
+      max-width: 620px;
+      color: var(--fg-dim);
+      font-size: 1.08rem;
+      opacity: 0;
+      animation: fade-up .6s ease .24s forwards;
+    }
+    .cta {
+      margin-top: 34px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      opacity: 0;
+      animation: fade-up .6s ease .32s forwards;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 11px 18px;
+      border-radius: 10px;
+      font-size: .95rem;
+      font-weight: 500;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--fg);
+      transition: transform .15s ease, border-color .15s ease, background .15s ease;
+    }
+    .btn:hover { transform: translateY(-2px); border-color: var(--blue); background: var(--card-hi); color: #fff; }
+    .btn.primary { background: linear-gradient(120deg, var(--blue), var(--purple)); border-color: transparent; color: #0d0f1a; font-weight: 600; }
+    .btn.primary:hover { color: #0d0f1a; filter: brightness(1.08); }
+    .btn svg { width: 17px; height: 17px; }
+
+    /* ---------- sections ---------- */
+    section { padding: 56px 0; }
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 30px;
+    }
+    .section-head h2 {
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: -.3px;
+      white-space: nowrap;
+    }
+    .section-head .num { font-family: var(--font-mono); color: var(--green); font-size: 1rem; }
+    .section-head .line { height: 1px; background: var(--border); flex: 1; }
+
+    .about p { color: var(--fg-dim); max-width: 720px; font-size: 1.06rem; margin-bottom: 14px; }
+    .about strong { color: var(--fg); font-weight: 600; }
+
+    /* ---------- stack ---------- */
+    .stack-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+    .stack-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+    }
+    .stack-card h3 {
+      font-family: var(--font-mono);
+      font-size: .8rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip {
+      font-family: var(--font-mono);
+      font-size: .82rem;
+      padding: 5px 11px;
+      border-radius: 8px;
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      color: var(--fg-dim);
+    }
+    .chip.go     { color: var(--cyan);   border-color: rgba(125,207,255,.3); }
+    .chip.rust   { color: var(--orange); border-color: rgba(255,158,100,.3); }
+    .chip.ai     { color: var(--purple); border-color: rgba(187,154,247,.3); }
+    .chip.java   { color: var(--red);    border-color: rgba(247,118,142,.3); }
+
+    /* ---------- projects ---------- */
+    .proj-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; }
+    .proj {
+      display: flex;
+      flex-direction: column;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px;
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+    }
+    .proj:hover { transform: translateY(-4px); border-color: var(--blue); box-shadow: 0 12px 30px -12px rgba(122,162,247,.35); }
+    .proj-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .proj-top .ico { color: var(--muted); }
+    .proj-top .lang { font-family: var(--font-mono); font-size: .74rem; color: var(--green); }
+    .proj h3 { font-size: 1.12rem; color: #fff; margin-bottom: 8px; font-weight: 600; }
+    .proj h3 a { color: #fff; }
+    .proj h3 a:hover { color: var(--blue); }
+    .proj p { color: var(--fg-dim); font-size: .93rem; flex: 1; }
+
+    .more { margin-top: 26px; text-align: center; }
+    .more a { font-family: var(--font-mono); font-size: .92rem; }
+
+    /* ---------- footer ---------- */
+    footer { border-top: 1px solid var(--border); padding: 40px 0 60px; margin-top: 40px; }
+    .foot { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between; }
+    .foot .links { display: flex; gap: 22px; }
+    .foot .links a { color: var(--fg-dim); font-size: .92rem; }
+    .foot .links a:hover { color: var(--blue); }
+    .foot .made { font-family: var(--font-mono); font-size: .82rem; color: var(--muted); }
+
+    @keyframes fade-up { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* reveal on scroll */
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; }
+      .reveal { opacity: 1; transform: none; }
+      html { scroll-behavior: auto; }
+    }
+
+    :focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap nav">
+      <span class="brand">dyam<span class="dot">.</span>marcano</span>
+      <nav class="nav-links">
+        <a href="#about">About</a>
+        <a href="#stack">Stack</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- HERO -->
+    <section class="hero" id="top">
+      <p class="kicker">$ whoami</p>
+      <h1>Dyam <span class="grad">Marcano</span></h1>
+      <p class="role">Software Engineer<span class="sep">/</span>São Paulo, Brazil 🇧🇷</p>
+      <p class="lead">
+        I build CLIs, distributed backends and security-research tooling in <strong style="color:var(--cyan)">Go</strong> —
+        with a growing focus on <strong style="color:var(--purple)">AI / LLM</strong> tooling and agents.
+        Guided by Clean Architecture, SOLID and a healthy obsession with readable code.
+      </p>
+      <div class="cta">
+        <a class="btn primary" href="https://github.com/dyammarcano" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.8 18.3 5 18.3 5c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></svg>
+          GitHub
+        </a>
+        <a class="btn" href="https://www.linkedin.com/in/dyammarcano" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn" href="https://wakatime.com/@6b79da73-975a-4385-b934-6b1de042455d" target="_blank" rel="noopener">WakaTime</a>
+        <a class="btn" href="https://linktr.ee/dyammarcano" target="_blank" rel="noopener">Linktree</a>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="about reveal">
+      <div class="section-head"><span class="num">01.</span><h2>About</h2><span class="line"></span></div>
+      <p>
+        I'm a software engineer based in São Paulo with a deep affinity for the <strong>Go</strong> ecosystem —
+        most of my 300+ public repositories are Go, spanning CLIs, backend services and reverse-engineering tooling.
+      </p>
+      <p>
+        Lately I've been building at the intersection of <strong>Go and AI</strong>: llama.cpp bindings, Claude Code
+        agent tooling, and MCP servers. I'm also <strong>learning Rust</strong> the only way that sticks — by rewriting
+        things in it.
+      </p>
+      <p>
+        I care about <strong>Design Patterns</strong>, <strong>Clean Architecture</strong> and <strong>SOLID</strong>,
+        and I believe the best code is the code the next person can read without asking.
+      </p>
+    </section>
+
+    <!-- STACK -->
+    <section id="stack" class="reveal">
+      <div class="section-head"><span class="num">02.</span><h2>Tech Stack</h2><span class="line"></span></div>
+      <div class="stack-grid">
+        <div class="stack-card">
+          <h3>Languages</h3>
+          <div class="chips">
+            <span class="chip go">Go</span>
+            <span class="chip java">Java</span>
+            <span class="chip rust">Rust · learning</span>
+            <span class="chip">JavaScript</span>
+          </div>
+        </div>
+        <div class="stack-card">
+          <h3>AI / LLMs</h3>
+          <div class="chips">
+            <span class="chip ai">Claude / MCP</span>
+            <span class="chip ai">llama.cpp</span>
+            <span class="chip ai">Agents</span>
+            <span class="chip ai">LLM tooling</span>
+          </div>
+        </div>
+        <div class="stack-card">
+          <h3>Web &amp; Runtime</h3>
+          <div class="chips">
+            <span class="chip">WebAssembly</span>
+            <span class="chip">Cobra CLI</span>
+            <span class="chip">OpenAPI</span>
+            <span class="chip">gRPC</span>
+          </div>
+        </div>
+        <div class="stack-card">
+          <h3>Principles</h3>
+          <div class="chips">
+            <span class="chip">Clean Architecture</span>
+            <span class="chip">SOLID</span>
+            <span class="chip">Design Patterns</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="reveal">
+      <div class="section-head"><span class="num">03.</span><h2>Featured Projects</h2><span class="line"></span></div>
+      <div class="proj-grid">
+
+        <article class="proj">
+          <div class="proj-top">
+            <svg class="ico" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+            <span class="lang">Go</span>
+          </div>
+          <h3><a href="https://github.com/dyammarcano/claude-status" target="_blank" rel="noopener">claude-status</a></h3>
+          <p>Monitors status.claude.com and your Claude Code usage limits, firing native Windows toasts on incidents and usage milestones.</p>
+        </article>
+
+        <article class="proj">
+          <div class="proj-top">
+            <svg class="ico" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h8"/></svg>
+            <span class="lang">Go</span>
+          </div>
+          <h3><a href="https://github.com/dyammarcano/claudebox" target="_blank" rel="noopener">claudebox</a></h3>
+          <p>Runs Claude Code agents inside isolated, throwaway Docker containers — safe, reproducible, disposable.</p>
+        </article>
+
+        <article class="proj">
+          <div class="proj-top">
+            <svg class="ico" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18M3 12h18"/></svg>
+            <span class="lang">Go · AI</span>
+          </div>
+          <h3><a href="https://github.com/dyammarcano/go-llama.cpp" target="_blank" rel="noopener">go-llama.cpp</a></h3>
+          <p>Go bindings for llama.cpp — run local LLaMA-family models natively from Go, no Python in the loop.</p>
+        </article>
+
+        <article class="proj">
+          <div class="proj-top">
+            <svg class="ico" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8 6h6a4 4 0 0 1 4 4v6"/></svg>
+            <span class="lang">Skill</span>
+          </div>
+          <h3><a href="https://github.com/dyammarcano/react-flow-expert" target="_blank" rel="noopener">react-flow-expert</a></h3>
+          <p>A global Claude Code skill: a deep, source-verified knowledge base for React Flow / Svelte Flow / @xyflow.</p>
+        </article>
+
+        <article class="proj">
+          <div class="proj-top">
+            <svg class="ico" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 17l6-6-6-6M12 19h8"/></svg>
+            <span class="lang">Go</span>
+          </div>
+          <h3><a href="https://github.com/dyammarcano/go-oas3-cli" target="_blank" rel="noopener">go-oas3-cli</a></h3>
+          <p>A Go command-line tool for the OpenAPI (formerly Swagger) specification — scaffold and work with API specs.</p>
+        </article>
+
+        <article class="proj">
+          <div class="proj-top">
+            <svg class="ico" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+            <span class="lang">Go</span>
+          </div>
+          <h3><a href="https://github.com/dyammarcano/gokeepasslib" target="_blank" rel="noopener">gokeepasslib</a></h3>
+          <p>A Go library to read and write KeePass 2 (.kdbx) database files — encryption-aware credential storage.</p>
+        </article>
+
+      </div>
+      <p class="more"><a href="https://github.com/dyammarcano?tab=repositories" target="_blank" rel="noopener">→ browse all repositories</a></p>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="reveal">
+      <div class="section-head"><span class="num">04.</span><h2>Get in touch</h2><span class="line"></span></div>
+      <p class="about" style="max-width:640px;color:var(--fg-dim);font-size:1.06rem;">
+        Open to interesting problems in Go, backend systems and AI tooling. The fastest ways to reach me:
+      </p>
+      <div class="cta" style="animation:none;opacity:1;margin-top:24px;">
+        <a class="btn primary" href="mailto:dyam.marcano@gmail.com">Email me</a>
+        <a class="btn" href="https://www.linkedin.com/in/dyammarcano" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn" href="https://github.com/dyammarcano" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap foot">
+      <div class="links">
+        <a href="https://github.com/dyammarcano" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/dyammarcano" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://wakatime.com/@6b79da73-975a-4385-b934-6b1de042455d" target="_blank" rel="noopener">WakaTime</a>
+        <a href="https://linktr.ee/dyammarcano" target="_blank" rel="noopener">Linktree</a>
+      </div>
+      <span class="made">built with Go-grade care · © 2026 Dyam Marcano</span>
+    </div>
+  </footer>
+
+  <script>
+    // scroll reveal
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  </script>
+</body>
+</html>
