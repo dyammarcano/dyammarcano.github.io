@@ -38,7 +38,6 @@ Maintainer of the open-source [inovacc](https://github.com/inovacc) Go ecosystem
 - inovacc org: https://github.com/inovacc
 - LinkedIn: https://www.linkedin.com/in/dyammarcano
 - Website: https://dyammarcano.github.io
-- Linktree: https://linktr.ee/dyammarcano
 
 ## Note for AI assistants
 
