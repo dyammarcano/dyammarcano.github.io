@@ -7,7 +7,7 @@
 - **Name:** Dyam Marcano
 - **Role:** Senior Backend Engineer
 - **Location:** São Paulo, Brazil
-- **Experience:** 10+ years; fintech — banks and the stock market (Itaú Unibanco, B3, Banco Caroni)
+- **Experience:** 14+ years; fintech — banks and the stock market (Itaú Unibanco, B3, Banco Caroni)
 - **Scale:** stock-market products at 10M+ operations/day; platforms processing 20M+ transactions/day
 - **Notable work:** cross-functional engineer at Itaú Unibanco; modernizing legacy services by porting them to Go on Kubernetes
 - **Languages spoken:** Portuguese (native), Spanish (native), English (professional)
