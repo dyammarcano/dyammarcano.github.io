@@ -127,9 +127,26 @@
     }
     .brand { font-weight: 700; letter-spacing: .3px; color: var(--fg); }
     .brand .dot { color: var(--green); }
+    .nav-actions { display: flex; align-items: center; gap: 22px; }
     .nav-links { display: flex; gap: 26px; font-size: .95rem; }
     .nav-links a { color: var(--fg-dim); }
     .nav-links a:hover { color: var(--blue); }
+    .geek-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      height: 34px;
+      padding: 0 12px;
+      border: 1px solid rgba(158,206,106,.36);
+      border-radius: 8px;
+      background: rgba(36,40,59,.72);
+      color: var(--green);
+      font: 500 .82rem/1 var(--font-mono);
+      cursor: pointer;
+      transition: transform .15s ease, border-color .15s ease, background .15s ease;
+    }
+    .geek-btn::before { content: "</>"; color: var(--cyan); }
+    .geek-btn:hover { transform: translateY(-1px); border-color: var(--green); background: var(--card-hi); }
     @media (max-width: 620px) { .nav-links { display: none; } }
 
     /* ---------- hero ---------- */
@@ -299,6 +316,518 @@
     .foot .links a:hover { color: var(--blue); }
     .foot .made { font-family: var(--font-mono); font-size: .82rem; color: var(--muted); }
 
+    /* ---------- geek tools modal ---------- */
+    .tool-modal {
+      width: clamp(650px, 76vw, 980px);
+      max-width: calc(100vw - 24px);
+      max-height: min(780px, calc(100dvh - 16px));
+      margin: auto;
+      padding: 0;
+      overflow: hidden;
+      color: var(--fg);
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: 0 24px 80px rgba(0,0,0,.48);
+    }
+    .tool-modal::backdrop { background: rgba(7,8,14,.72); backdrop-filter: blur(4px); }
+    .tool-shell {
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      max-height: inherit;
+      min-height: 0;
+    }
+    .tool-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(26,27,38,.58);
+    }
+    .tool-title { display: grid; gap: 2px; }
+    .tool-title h2 { color: #fff; font-size: 1.08rem; line-height: 1.2; }
+    .tool-count { color: var(--muted); font: .78rem/1.4 var(--font-mono); }
+    .icon-btn {
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--card);
+      color: var(--fg-dim);
+      font-size: 1.35rem;
+      line-height: 1;
+      cursor: pointer;
+      transition: color .15s ease, border-color .15s ease, background .15s ease;
+    }
+    .icon-btn:hover { color: #fff; border-color: var(--blue); background: var(--card-hi); }
+    .tool-workbench {
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto auto;
+      gap: 12px;
+      min-height: 0;
+      padding: 16px 20px;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+      background: rgba(36,40,59,.56);
+    }
+    .tool-workbench,
+    .tool-io,
+    .tool-image,
+    .tool-generator,
+    .gen-controls,
+    .gen-preview,
+    .image-controls,
+    .image-preview,
+    .phone-results,
+    .doc-results {
+      scrollbar-width: none;
+    }
+    .tool-workbench::-webkit-scrollbar,
+    .tool-io::-webkit-scrollbar,
+    .tool-image::-webkit-scrollbar,
+    .tool-generator::-webkit-scrollbar,
+    .gen-controls::-webkit-scrollbar,
+    .gen-preview::-webkit-scrollbar,
+    .image-controls::-webkit-scrollbar,
+    .image-preview::-webkit-scrollbar,
+    .phone-results::-webkit-scrollbar,
+    .doc-results::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+    }
+    .tool-row {
+      display: grid;
+      grid-template-columns: minmax(220px, 1fr) minmax(150px, .46fr);
+      gap: 10px;
+      align-items: end;
+    }
+    .tool-field { display: grid; gap: 6px; }
+    .tool-field[hidden] { display: none; }
+    .tool-field span {
+      color: var(--muted);
+      font: .72rem/1.2 var(--font-mono);
+      text-transform: uppercase;
+    }
+    .tool-field select,
+    .tool-field input,
+    .tool-input,
+    .tool-output {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg);
+      color: var(--fg);
+      font: .88rem/1.35 var(--font-mono);
+    }
+    .tool-field select,
+    .tool-field input {
+      height: 40px;
+      padding: 0 11px;
+    }
+    .tool-option-help {
+      min-height: 1.25em;
+      color: var(--fg-dim);
+      font-size: .76rem;
+      line-height: 1.25;
+    }
+    .tool-option-help[hidden] { display: none; }
+    .tool-run {
+      height: 40px;
+      padding: 0 16px;
+      border: 1px solid rgba(125,207,255,.38);
+      border-radius: 8px;
+      background: rgba(125,207,255,.1);
+      color: var(--cyan);
+      font: 600 .82rem/1 var(--font-mono);
+      cursor: pointer;
+    }
+    .tool-run:hover { border-color: var(--cyan); color: #fff; }
+    .tool-io { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .tool-io[hidden] { display: none; }
+    .tool-io.output-only { grid-template-columns: 1fr; }
+    .tool-text-field {
+      display: grid;
+      grid-template-rows: auto 148px;
+      align-content: start;
+      min-width: 0;
+      gap: 6px;
+    }
+    .tool-text-field[hidden] { display: none; }
+    .tool-text-label {
+      color: var(--muted);
+      font: .72rem/1.2 var(--font-mono);
+      text-transform: uppercase;
+    }
+    .tool-input,
+    .tool-output {
+      min-height: 0;
+      height: 148px;
+      padding: 11px;
+      resize: none;
+      overflow: auto;
+    }
+    .tool-output { margin: 0; white-space: pre-wrap; word-break: break-word; }
+    .tool-meta { display: flex; flex-wrap: wrap; gap: 8px; color: var(--fg-dim); font-size: .84rem; }
+    .tool-explain {
+      display: grid;
+      gap: 6px;
+      padding: 11px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: rgba(18,19,29,.66);
+      color: var(--fg-dim);
+      font-size: .86rem;
+      line-height: 1.45;
+    }
+    .tool-explain[hidden] { display: none; }
+    .tool-explain span {
+      color: var(--muted);
+      font: .72rem/1.2 var(--font-mono);
+      text-transform: uppercase;
+    }
+    .tool-explain p { margin: 0; }
+    .tool-origin {
+      color: var(--green);
+      font: .72rem/1.3 var(--font-mono);
+      text-transform: uppercase;
+    }
+    .tool-store {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-left: auto;
+      color: var(--fg-dim);
+      font: .78rem/1.3 var(--font-mono);
+    }
+    .tool-store input { accent-color: var(--green); }
+    .tool-image {
+      display: grid;
+      grid-template-columns: minmax(210px, .8fr) minmax(280px, 1.2fr);
+      gap: 12px;
+      align-items: start;
+      min-height: 0;
+      overflow: auto;
+    }
+    .tool-image[hidden] { display: none; }
+    .image-controls {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--card);
+      min-height: 0;
+      overflow: auto;
+    }
+    .image-controls .wide { grid-column: 1 / -1; }
+    .image-field {
+      display: grid;
+      gap: 5px;
+      min-width: 0;
+    }
+    .image-field span {
+      color: var(--muted);
+      font: .72rem/1.2 var(--font-mono);
+      text-transform: uppercase;
+    }
+    .image-field input,
+    .image-field select {
+      width: 100%;
+      height: 36px;
+      padding: 0 9px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg);
+      color: var(--fg);
+      font: .82rem/1.2 var(--font-mono);
+    }
+    .image-field input[type="range"] { padding: 0; accent-color: var(--cyan); }
+    .image-check {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 36px;
+      color: var(--fg-dim);
+      font: .78rem/1.2 var(--font-mono);
+    }
+    .image-check input { accent-color: var(--green); }
+    .image-preview {
+      display: grid;
+      gap: 9px;
+      min-width: 0;
+      min-height: 0;
+      overflow: auto;
+    }
+    .image-preview canvas {
+      display: block;
+      justify-self: center;
+      width: auto;
+      max-width: 100%;
+      height: auto;
+      max-height: 360px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background:
+        linear-gradient(45deg, rgba(255,255,255,.05) 25%, transparent 25%),
+        linear-gradient(-45deg, rgba(255,255,255,.05) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, rgba(255,255,255,.05) 75%),
+        linear-gradient(-45deg, transparent 75%, rgba(255,255,255,.05) 75%);
+      background-size: 18px 18px;
+      background-position: 0 0, 0 9px, 9px -9px, -9px 0;
+      object-fit: contain;
+    }
+    .image-info {
+      color: var(--fg-dim);
+      font: .78rem/1.45 var(--font-mono);
+      word-break: break-word;
+    }
+    .image-download[hidden] { display: none; }
+    .tool-generator {
+      display: grid;
+      grid-template-columns: minmax(220px, .86fr) minmax(300px, 1.14fr);
+      gap: 12px;
+      align-items: stretch;
+      min-height: 0;
+      overflow: auto;
+    }
+    .tool-generator[hidden] { display: none; }
+    .gen-controls {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--card);
+      min-height: 0;
+      overflow: auto;
+      align-content: start;
+    }
+    .gen-controls .wide { grid-column: 1 / -1; }
+    .gen-field {
+      display: grid;
+      gap: 5px;
+      min-width: 0;
+    }
+    .gen-field[hidden],
+    .gen-check[hidden] { display: none; }
+    .gen-field span {
+      color: var(--muted);
+      font: .72rem/1.2 var(--font-mono);
+      text-transform: uppercase;
+    }
+    .gen-field input,
+    .gen-field select,
+    .gen-field textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg);
+      color: var(--fg);
+      font: .82rem/1.3 var(--font-mono);
+    }
+    .gen-field input,
+    .gen-field select { height: 36px; padding: 0 9px; }
+    .gen-field input[type="range"] { padding: 0; accent-color: var(--cyan); }
+    .gen-field input[type="color"] { padding: 2px; }
+    .gen-field textarea { min-height: 76px; padding: 9px; resize: vertical; }
+    .gen-check {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 36px;
+      color: var(--fg-dim);
+      font: .78rem/1.2 var(--font-mono);
+    }
+    .gen-check input { accent-color: var(--green); }
+    .gen-preview {
+      display: grid;
+      gap: 9px;
+      min-width: 0;
+      min-height: 0;
+      overflow: auto;
+    }
+    .gen-preview canvas {
+      width: min(100%, 360px);
+      height: auto;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+    }
+    .gen-download[hidden] { display: none; }
+    .phone-results {
+      display: grid;
+      gap: 10px;
+      min-width: 0;
+      min-height: 0;
+      overflow: auto;
+      align-content: start;
+    }
+    .phone-card {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 10px;
+      align-items: center;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--card);
+    }
+    .phone-card img {
+      width: 28px;
+      height: 20px;
+      border-radius: 4px;
+      border: 1px solid rgba(255,255,255,.12);
+      object-fit: cover;
+    }
+    .phone-card h3 { color: #fff; font-size: .95rem; line-height: 1.25; }
+    .phone-card p { color: var(--fg-dim); font-size: .84rem; line-height: 1.4; }
+    .phone-kind { color: var(--green); font: .72rem/1.3 var(--font-mono); text-transform: uppercase; }
+    .doc-results {
+      display: grid;
+      gap: 10px;
+      min-width: 0;
+      min-height: 0;
+      overflow: auto;
+      align-content: start;
+    }
+    .result-card {
+      display: grid;
+      gap: 10px;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--card);
+    }
+    .result-card.ok { border-color: rgba(158,206,106,.34); }
+    .result-card.bad { border-color: rgba(247,118,142,.34); }
+    .result-title {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .result-title h3 { color: #fff; font-size: .98rem; line-height: 1.25; }
+    .result-status {
+      flex: 0 0 auto;
+      color: var(--green);
+      font: .72rem/1.35 var(--font-mono);
+      text-transform: uppercase;
+    }
+    .result-card.bad .result-status { color: var(--red); }
+    .result-kv {
+      display: grid;
+      grid-template-columns: minmax(88px, .38fr) 1fr;
+      gap: 6px 10px;
+      font: .8rem/1.35 var(--font-mono);
+    }
+    .person-card .result-kv {
+      grid-template-columns: max-content minmax(96px, 1fr) max-content minmax(96px, 1fr);
+      column-gap: 14px;
+    }
+    .result-kv dt { color: var(--muted); }
+    .result-kv dd { color: var(--fg); min-width: 0; word-break: break-word; }
+    .detail-list {
+      display: grid;
+      gap: 4px;
+      color: var(--fg-dim);
+      font-size: .84rem;
+      line-height: 1.4;
+      list-style-position: inside;
+    }
+    .raw-details {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: rgba(18,19,29,.54);
+      overflow: hidden;
+    }
+    .raw-details summary {
+      cursor: pointer;
+      padding: 8px 10px;
+      color: var(--cyan);
+      font: .78rem/1.3 var(--font-mono);
+    }
+    .raw-details .tool-output {
+      height: auto;
+      max-height: 132px;
+      border-width: 1px 0 0;
+      border-radius: 0;
+    }
+    [data-group-output] {
+      min-height: 128px;
+      height: 100%;
+    }
+    [data-password-panel] .gen-controls .wide { grid-column: auto; }
+    [data-password-panel] .gen-check { min-height: 28px; }
+    [data-qr-panel] .gen-preview canvas {
+      width: min(100%, 300px);
+      max-height: 300px;
+    }
+    [data-qr-panel] .tool-output { height: 104px; }
+    .doc-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .doc-pill {
+      padding: 4px 8px;
+      border: 1px solid rgba(122,162,247,.3);
+      border-radius: 999px;
+      color: var(--fg-dim);
+      font: .72rem/1.2 var(--font-mono);
+      word-break: break-word;
+    }
+    @media (max-width: 700px) {
+      .tool-workbench {
+        display: block;
+        overflow: auto;
+      }
+      .tool-workbench > * { margin-bottom: 12px; }
+      .tool-workbench > *:last-child { margin-bottom: 0; }
+      .tool-row,
+      .tool-io,
+      .tool-image,
+      .tool-generator { grid-template-columns: 1fr; }
+      .tool-io,
+      .tool-image,
+      .tool-generator,
+      .gen-controls,
+      .gen-preview,
+      .image-controls,
+      .image-preview,
+      .phone-results,
+      .doc-results {
+        overflow: visible;
+      }
+      .tool-workbench { padding: 14px; }
+      .tool-text-field { grid-template-rows: auto 128px; }
+      .tool-input,
+      .tool-output { height: 128px; }
+      .tool-explain { font-size: .82rem; }
+      .tool-run { width: 100%; }
+      .person-card .result-kv {
+        grid-template-columns: minmax(88px, .38fr) 1fr;
+      }
+      [data-password-panel] .gen-controls .wide { grid-column: 1 / -1; }
+    }
+    .tool-open {
+      justify-self: start;
+      color: var(--cyan);
+      font: 500 .84rem/1.2 var(--font-mono);
+    }
+    .tool-open:hover { color: #fff; }
+    .tool-empty {
+      grid-column: 1 / -1;
+      color: var(--fg-dim);
+      font: .9rem/1.5 var(--font-mono);
+      padding: 18px 0;
+    }
+
     @keyframes fade-up { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 
     /* reveal on scroll */
@@ -337,12 +866,15 @@
   <header>
     <div class="wrap nav">
       <span class="brand">dyam<span class="dot">.</span>marcano</span>
-      <nav class="nav-links">
-        <a href="#about">About</a>
-        <a href="#stack">Stack</a>
-        <a href="#proverbs">Proverbs</a>
-        <a href="#contact">Contact</a>
-      </nav>
+      <div class="nav-actions">
+        <nav class="nav-links">
+          <a href="#about">About</a>
+          <a href="#stack">Stack</a>
+          <a href="#proverbs">Proverbs</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <button class="geek-btn" type="button" data-geek-open>Geek</button>
+      </div>
     </div>
   </header>
 
@@ -538,11 +1070,1394 @@
     </div>
   </footer>
 
+  <dialog class="tool-modal" id="geek-tools" aria-labelledby="geek-tools-title">
+    <div class="tool-shell">
+      <div class="tool-head">
+        <div class="tool-title">
+          <h2 id="geek-tools-title">Geek Tools</h2>
+          <span class="tool-count" data-tool-count></span>
+        </div>
+        <button class="icon-btn" type="button" data-geek-close aria-label="Close geek tools">&times;</button>
+      </div>
+      <div class="tool-workbench" data-tool-workbench>
+        <div class="tool-row">
+          <label class="tool-field">
+            <span data-tool-select-label>Group</span>
+            <select data-local-tool></select>
+          </label>
+          <label class="tool-field" data-tool-option-wrap hidden>
+            <span data-tool-option-label>Option</span>
+            <input type="text" data-tool-option autocomplete="off" />
+            <small class="tool-option-help" data-tool-option-help hidden></small>
+          </label>
+          <button class="tool-run" type="button" data-tool-run>Run</button>
+        </div>
+        <div class="tool-io" data-tool-text-panel>
+          <label class="tool-text-field" data-tool-input-field>
+            <span class="tool-text-label" data-tool-input-label>Input</span>
+            <textarea class="tool-input" data-tool-input spellcheck="false" placeholder="input"></textarea>
+          </label>
+          <div class="tool-text-field">
+            <span class="tool-text-label">Output</span>
+            <pre class="tool-output" data-tool-output>ready</pre>
+          </div>
+        </div>
+        <div class="tool-generator" data-group-panel hidden>
+          <div class="gen-controls">
+            <label class="gen-field wide" data-group-tool-field>
+              <span>Operation</span>
+              <select data-group-tool></select>
+            </label>
+            <label class="gen-check wide">
+              <input type="checkbox" data-group-auto />
+              Auto Update
+            </label>
+            <label class="gen-field wide" data-group-input-field>
+              <span data-group-input-label>Value</span>
+              <textarea data-group-input spellcheck="false"></textarea>
+            </label>
+            <label class="gen-field wide" data-group-option-field hidden>
+              <span data-group-option-label>Option</span>
+              <input type="text" data-group-option autocomplete="off" />
+              <small class="tool-option-help" data-group-option-help hidden></small>
+            </label>
+          </div>
+          <div class="doc-results" data-group-results>
+            <pre class="tool-output" data-group-output>ready</pre>
+          </div>
+        </div>
+        <div class="tool-image" data-image-panel hidden>
+          <div class="image-controls">
+            <label class="image-field wide">
+              <span>Image</span>
+              <input type="file" accept="image/*" data-image-file />
+            </label>
+            <label class="image-field">
+              <span>Width</span>
+              <input type="number" min="1" step="1" data-image-width />
+            </label>
+            <label class="image-field">
+              <span>Height</span>
+              <input type="number" min="1" step="1" data-image-height />
+            </label>
+            <label class="image-check">
+              <input type="checkbox" checked data-image-ratio />
+              Lock ratio
+            </label>
+            <label class="image-field">
+              <span>Rotate</span>
+              <select data-image-rotate>
+                <option value="0">0</option>
+                <option value="90">90</option>
+                <option value="180">180</option>
+                <option value="270">270</option>
+              </select>
+            </label>
+            <label class="image-check">
+              <input type="checkbox" data-image-flip-h />
+              Flip H
+            </label>
+            <label class="image-check">
+              <input type="checkbox" data-image-flip-v />
+              Flip V
+            </label>
+            <label class="image-field">
+              <span>Brightness</span>
+              <input type="range" min="-100" max="100" value="0" data-image-brightness />
+            </label>
+            <label class="image-field">
+              <span>Contrast</span>
+              <input type="range" min="0" max="200" value="100" data-image-contrast />
+            </label>
+            <label class="image-field">
+              <span>Saturation</span>
+              <input type="range" min="0" max="200" value="100" data-image-saturation />
+            </label>
+            <label class="image-field">
+              <span>Grayscale</span>
+              <input type="range" min="0" max="100" value="0" data-image-grayscale />
+            </label>
+            <label class="image-field">
+              <span>Format</span>
+              <select data-image-format>
+                <option value="image/png">PNG</option>
+                <option value="image/jpeg">JPEG</option>
+                <option value="image/webp">WebP</option>
+              </select>
+            </label>
+            <label class="image-field">
+              <span>Quality</span>
+              <input type="range" min="0.1" max="1" step="0.05" value="0.92" data-image-quality />
+            </label>
+          </div>
+          <div class="image-preview">
+            <canvas data-image-canvas width="640" height="480"></canvas>
+            <span class="image-info" data-image-info>choose an image</span>
+            <a class="tool-open image-download" data-image-download hidden>download image</a>
+            <pre class="tool-output" data-image-output>ready</pre>
+          </div>
+        </div>
+        <div class="tool-generator" data-password-panel hidden>
+          <div class="gen-controls">
+            <label class="gen-check wide">
+              <input type="checkbox" checked data-pass-auto />
+              Auto Update
+            </label>
+            <label class="gen-check wide">
+              <input type="checkbox" data-pass-remember />
+              Remember Input
+            </label>
+            <label class="gen-field wide">
+              <span>Length</span>
+              <input type="number" min="1" max="512" step="1" value="16" data-pass-length />
+            </label>
+            <label class="gen-field wide">
+              <span>Count</span>
+              <input type="number" min="1" max="100" step="1" value="1" data-pass-count />
+            </label>
+            <label class="gen-check wide">
+              <input type="checkbox" checked data-pass-lower />
+              Lowercase
+            </label>
+            <label class="gen-check wide">
+              <input type="checkbox" checked data-pass-upper />
+              Uppercase
+            </label>
+            <label class="gen-check wide">
+              <input type="checkbox" checked data-pass-numbers />
+              Numbers
+            </label>
+            <label class="gen-check wide">
+              <input type="checkbox" checked data-pass-symbols />
+              Symbols
+            </label>
+            <label class="gen-check wide">
+              <input type="checkbox" data-pass-similar />
+              Exclude similar characters
+            </label>
+            <label class="gen-check wide">
+              <input type="checkbox" data-pass-ambiguous />
+              Exclude ambiguous symbols
+            </label>
+            <label class="gen-check wide">
+              <input type="checkbox" checked data-pass-require />
+              Require each selected character set
+            </label>
+          </div>
+          <div class="gen-preview">
+            <pre class="tool-output" data-pass-output>ready</pre>
+          </div>
+        </div>
+        <div class="tool-generator" data-qr-panel hidden>
+          <div class="gen-controls">
+            <label class="gen-check wide">
+              <input type="checkbox" checked data-qr-auto />
+              Auto Update
+            </label>
+            <label class="gen-check wide">
+              <input type="checkbox" data-qr-remember />
+              Remember Input
+            </label>
+            <label class="gen-field wide">
+              <span>Content</span>
+              <textarea data-qr-content spellcheck="false">https://dyammarcano.github.io/</textarea>
+            </label>
+            <label class="gen-field">
+              <span>Type</span>
+              <select data-qr-format>
+                <option value="image/png">PNG</option>
+                <option value="image/jpeg">JPEG</option>
+                <option value="image/webp">WebP</option>
+              </select>
+            </label>
+            <label class="gen-field">
+              <span>Size</span>
+              <input type="number" min="96" max="2048" step="8" value="256" data-qr-size />
+            </label>
+            <label class="gen-field">
+              <span>Padding</span>
+              <input type="number" min="0" max="256" step="1" value="16" data-qr-padding />
+            </label>
+            <label class="gen-field">
+              <span>Error Correction</span>
+              <select data-qr-ecc>
+                <option value="L">L</option>
+                <option value="M">M</option>
+                <option value="Q" selected>Q</option>
+                <option value="H">H</option>
+              </select>
+            </label>
+            <label class="gen-field">
+              <span>Dot Type</span>
+              <select data-qr-dot>
+                <option value="square">Square</option>
+                <option value="rounded">Rounded</option>
+                <option value="circle">Circle</option>
+              </select>
+            </label>
+            <label class="gen-field">
+              <span>Color Type</span>
+              <select data-qr-dot-color-type>
+                <option value="single">Single Color</option>
+              </select>
+            </label>
+            <label class="gen-field wide">
+              <span>Color</span>
+              <input type="color" value="#000000" data-qr-color />
+            </label>
+            <label class="gen-field">
+              <span>Corners Square Type</span>
+              <select data-qr-corner-square>
+                <option value="none">None</option>
+                <option value="square">Square</option>
+                <option value="rounded">Rounded</option>
+              </select>
+            </label>
+            <label class="gen-field">
+              <span>Color Type</span>
+              <select data-qr-corner-square-color-type>
+                <option value="single">Single Color</option>
+              </select>
+            </label>
+            <label class="gen-field wide">
+              <span>Color</span>
+              <input type="color" value="#000000" data-qr-corner-square-color />
+            </label>
+            <label class="gen-field">
+              <span>Corners Dot Type</span>
+              <select data-qr-corner-dot>
+                <option value="none">None</option>
+                <option value="square">Square</option>
+                <option value="circle">Circle</option>
+              </select>
+            </label>
+            <label class="gen-field">
+              <span>Color Type</span>
+              <select data-qr-corner-dot-color-type>
+                <option value="single">Single Color</option>
+              </select>
+            </label>
+            <label class="gen-field wide">
+              <span>Color</span>
+              <input type="color" value="#000000" data-qr-corner-dot-color />
+            </label>
+            <label class="gen-field">
+              <span>Background Color Type</span>
+              <select data-qr-bg-color-type>
+                <option value="single">Single Color</option>
+              </select>
+            </label>
+            <label class="gen-field wide">
+              <span>Color</span>
+              <input type="color" value="#ffffff" data-qr-bg />
+            </label>
+            <label class="gen-field">
+              <span>Image Type</span>
+              <select data-qr-image-type>
+                <option value="none">None</option>
+                <option value="url">URL</option>
+              </select>
+            </label>
+            <label class="gen-field wide">
+              <span>URL</span>
+              <input type="url" placeholder="https://..." data-qr-image-url />
+            </label>
+            <label class="gen-field">
+              <span>Size</span>
+              <input type="range" min="0" max="40" value="20" data-qr-image-size />
+            </label>
+            <label class="gen-field">
+              <span>Margin</span>
+              <input type="number" min="0" max="80" step="1" value="0" data-qr-image-margin />
+            </label>
+            <label class="gen-check wide">
+              <input type="checkbox" data-qr-image-bg-dots />
+              Show Background Dots
+            </label>
+          </div>
+          <div class="gen-preview">
+            <canvas data-qr-canvas width="256" height="256"></canvas>
+            <span class="image-info" data-qr-info>ready</span>
+            <a class="tool-open gen-download" data-qr-download hidden>download QR</a>
+            <pre class="tool-output" data-qr-output>ready</pre>
+          </div>
+        </div>
+        <div class="tool-generator" data-phone-panel hidden>
+          <div class="gen-controls">
+            <label class="gen-field wide">
+              <span>Phone / code / country</span>
+              <input type="text" placeholder="+55 11, 11, Brazil, +1" data-phone-input />
+            </label>
+            <label class="gen-check wide">
+              <input type="checkbox" checked data-phone-auto />
+              Auto Update
+            </label>
+          </div>
+          <div class="phone-results" data-phone-results>
+            <pre class="tool-output" data-phone-output>ready</pre>
+          </div>
+        </div>
+        <div class="tool-generator" data-selo-panel hidden>
+          <div class="gen-controls">
+            <label class="gen-field">
+              <span>Document</span>
+              <select data-selo-kind></select>
+            </label>
+            <label class="gen-field">
+              <span>Action</span>
+              <select data-selo-action></select>
+            </label>
+            <label class="gen-field">
+              <span>UF</span>
+              <select data-selo-uf></select>
+            </label>
+            <label class="gen-check">
+              <input type="checkbox" checked data-selo-auto />
+              Auto Update
+            </label>
+            <label class="gen-field wide" data-selo-input-field>
+              <span>Value</span>
+              <textarea data-selo-input spellcheck="false"></textarea>
+            </label>
+          </div>
+          <div class="doc-results" data-selo-results>
+            <pre class="tool-output" data-selo-output>ready</pre>
+          </div>
+        </div>
+        <div class="tool-explain" data-tool-explain>
+          <span>How it works</span>
+          <p data-tool-explain-text></p>
+        </div>
+        <div class="tool-meta">
+          <span class="tool-origin" data-tool-origin></span>
+          <span data-tool-hint></span>
+          <label class="tool-store">
+            <input type="checkbox" data-tool-store />
+            Remember
+          </label>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
   <script>
     const io = new IntersectionObserver((entries) => {
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
     }, { threshold: 0.12 });
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    const geekTools = (() => {
+      const modal = document.getElementById("geek-tools");
+      const count = document.querySelector("[data-tool-count]");
+      const localTool = document.querySelector("[data-local-tool]");
+      const textPanel = document.querySelector("[data-tool-text-panel]");
+      const toolInputField = document.querySelector("[data-tool-input-field]");
+      const toolInput = document.querySelector("[data-tool-input]");
+      const toolInputLabel = document.querySelector("[data-tool-input-label]");
+      const toolOutput = document.querySelector("[data-tool-output]");
+      const toolOption = document.querySelector("[data-tool-option]");
+      const toolOptionWrap = document.querySelector("[data-tool-option-wrap]");
+      const toolOptionLabel = document.querySelector("[data-tool-option-label]");
+      const toolOptionHelp = document.querySelector("[data-tool-option-help]");
+      const toolOrigin = document.querySelector("[data-tool-origin]");
+      const toolHint = document.querySelector("[data-tool-hint]");
+      const toolExplain = document.querySelector("[data-tool-explain]");
+      const toolExplainText = document.querySelector("[data-tool-explain-text]");
+      const toolRun = document.querySelector("[data-tool-run]");
+      const toolStore = document.querySelector("[data-tool-store]");
+      const groupPanel = document.querySelector("[data-group-panel]");
+      const groupToolField = document.querySelector("[data-group-tool-field]");
+      const groupTool = document.querySelector("[data-group-tool]");
+      const groupAuto = document.querySelector("[data-group-auto]");
+      const groupInputField = document.querySelector("[data-group-input-field]");
+      const groupInput = document.querySelector("[data-group-input]");
+      const groupInputLabel = document.querySelector("[data-group-input-label]");
+      const groupOptionField = document.querySelector("[data-group-option-field]");
+      const groupOptionLabel = document.querySelector("[data-group-option-label]");
+      const groupOption = document.querySelector("[data-group-option]");
+      const groupOptionHelp = document.querySelector("[data-group-option-help]");
+      const groupResults = document.querySelector("[data-group-results]");
+      const groupOutput = document.querySelector("[data-group-output]");
+      const imagePanel = document.querySelector("[data-image-panel]");
+      const imageFile = document.querySelector("[data-image-file]");
+      const imageWidth = document.querySelector("[data-image-width]");
+      const imageHeight = document.querySelector("[data-image-height]");
+      const imageRatioLock = document.querySelector("[data-image-ratio]");
+      const imageRotate = document.querySelector("[data-image-rotate]");
+      const imageFlipH = document.querySelector("[data-image-flip-h]");
+      const imageFlipV = document.querySelector("[data-image-flip-v]");
+      const imageBrightness = document.querySelector("[data-image-brightness]");
+      const imageContrast = document.querySelector("[data-image-contrast]");
+      const imageSaturation = document.querySelector("[data-image-saturation]");
+      const imageGrayscale = document.querySelector("[data-image-grayscale]");
+      const imageFormat = document.querySelector("[data-image-format]");
+      const imageQuality = document.querySelector("[data-image-quality]");
+      const imageCanvas = document.querySelector("[data-image-canvas]");
+      const imageInfo = document.querySelector("[data-image-info]");
+      const imageDownload = document.querySelector("[data-image-download]");
+      const imageOutput = document.querySelector("[data-image-output]");
+      const passwordPanel = document.querySelector("[data-password-panel]");
+      const passOutput = document.querySelector("[data-pass-output]");
+      const passAuto = document.querySelector("[data-pass-auto]");
+      const passRemember = document.querySelector("[data-pass-remember]");
+      const passLength = document.querySelector("[data-pass-length]");
+      const passCount = document.querySelector("[data-pass-count]");
+      const passLower = document.querySelector("[data-pass-lower]");
+      const passUpper = document.querySelector("[data-pass-upper]");
+      const passNumbers = document.querySelector("[data-pass-numbers]");
+      const passSymbols = document.querySelector("[data-pass-symbols]");
+      const passSimilar = document.querySelector("[data-pass-similar]");
+      const passAmbiguous = document.querySelector("[data-pass-ambiguous]");
+      const passRequire = document.querySelector("[data-pass-require]");
+      const qrPanel = document.querySelector("[data-qr-panel]");
+      const qrAuto = document.querySelector("[data-qr-auto]");
+      const qrRemember = document.querySelector("[data-qr-remember]");
+      const qrContent = document.querySelector("[data-qr-content]");
+      const qrFormat = document.querySelector("[data-qr-format]");
+      const qrSize = document.querySelector("[data-qr-size]");
+      const qrPadding = document.querySelector("[data-qr-padding]");
+      const qrEcc = document.querySelector("[data-qr-ecc]");
+      const qrDot = document.querySelector("[data-qr-dot]");
+      const qrColor = document.querySelector("[data-qr-color]");
+      const qrCornerSquare = document.querySelector("[data-qr-corner-square]");
+      const qrCornerSquareColor = document.querySelector("[data-qr-corner-square-color]");
+      const qrCornerDot = document.querySelector("[data-qr-corner-dot]");
+      const qrCornerDotColor = document.querySelector("[data-qr-corner-dot-color]");
+      const qrBg = document.querySelector("[data-qr-bg]");
+      const qrImageType = document.querySelector("[data-qr-image-type]");
+      const qrImageUrl = document.querySelector("[data-qr-image-url]");
+      const qrImageSize = document.querySelector("[data-qr-image-size]");
+      const qrImageMargin = document.querySelector("[data-qr-image-margin]");
+      const qrImageBgDots = document.querySelector("[data-qr-image-bg-dots]");
+      const qrCanvas = document.querySelector("[data-qr-canvas]");
+      const qrInfo = document.querySelector("[data-qr-info]");
+      const qrDownload = document.querySelector("[data-qr-download]");
+      const qrOutput = document.querySelector("[data-qr-output]");
+      const phonePanel = document.querySelector("[data-phone-panel]");
+      const phoneInput = document.querySelector("[data-phone-input]");
+      const phoneAuto = document.querySelector("[data-phone-auto]");
+      const phoneResults = document.querySelector("[data-phone-results]");
+      const phoneOutput = document.querySelector("[data-phone-output]");
+      const seloPanel = document.querySelector("[data-selo-panel]");
+      const seloKind = document.querySelector("[data-selo-kind]");
+      const seloAction = document.querySelector("[data-selo-action]");
+      const seloUf = document.querySelector("[data-selo-uf]");
+      const seloAuto = document.querySelector("[data-selo-auto]");
+      const seloInputField = document.querySelector("[data-selo-input-field]");
+      const seloInput = document.querySelector("[data-selo-input]");
+      const seloResults = document.querySelector("[data-selo-results]");
+      const seloOutput = document.querySelector("[data-selo-output]");
+      const stateKey = "dyam.geekTools.state.v1";
+      const route = new URLSearchParams(window.location.search);
+      let localApi;
+      let savedRestored = false;
+      let restoredState;
+      let restoredGroupPending;
+      let imageSourceName = "image";
+      let imageSourceWidth = 0;
+      let imageSourceHeight = 0;
+      let imageRatio = 1;
+      let imageDownloadUrl;
+      let imagePreviewTimer;
+      let imagePreviewSeq = 0;
+      let qrDownloadUrl;
+      let activeGroupId = "";
+      let activeLeafId = "";
+      let lastAutoInput = "";
+      let lastAutoOption = "";
+      let lastAutoGroupInput = "";
+      let lastAutoGroupOption = "";
+      let lastAutoPhone = "";
+      let lastAutoSelo = "";
+      const activeOutput = () => {
+        if (!groupPanel.hidden) return groupOutput;
+        if (!imagePanel.hidden) return imageOutput;
+        if (!passwordPanel.hidden) return passOutput;
+        if (!qrPanel.hidden) return qrOutput;
+        if (!phonePanel.hidden) return phoneOutput;
+        if (!seloPanel.hidden) return seloOutput;
+        return toolOutput;
+      };
+      const mk = (tag, cls, text) => {
+        const node = document.createElement(tag);
+        if (cls) node.className = cls;
+        if (text) node.textContent = text;
+        return node;
+      };
+      const local = () => localApi ||= import("./wasm/geek.js");
+      const selectedLocal = (api) => api.toolGroups.find(group => group.id === localTool.value) || api.toolGroups[0];
+      const selectedLeaf = (api, group = selectedLocal(api)) => {
+        const leafId = group.mode === "group" ? groupTool.value || group.tools[0] : group.sourceTool || group.tools[0];
+        return api.findTool(leafId) || api.findTool(group.tools[0]) || api.tools[0];
+      };
+      const setSelectValue = (select, value) => {
+        if (value && [...select.options].some(option => option.value === value)) {
+          select.value = value;
+          return true;
+        }
+        return false;
+      };
+      const selectGroupForId = (api, id) => {
+        const group = api.groupForTool(id) || api.toolGroups.find(item => item.id === id);
+        if (!group) return null;
+        localTool.value = group.id;
+        return group;
+      };
+      const applyTextDefaults = (tool, changedTool) => {
+        const canSample = tool.mode === "input" && tool.sample;
+        if (canSample && (changedTool || !toolInput.value || toolInput.value === lastAutoInput)) {
+          toolInput.value = tool.sample;
+          lastAutoInput = tool.sample;
+        } else if (!canSample && (changedTool || toolInput.value === lastAutoInput)) {
+          toolInput.value = "";
+          lastAutoInput = "";
+        }
+
+        if (tool.option) {
+          const defaultOption = tool.optionDefault || "";
+          if (defaultOption && (changedTool || !toolOption.value || toolOption.value === lastAutoOption)) {
+            toolOption.value = defaultOption;
+            lastAutoOption = defaultOption;
+          }
+        } else if (changedTool || toolOption.value === lastAutoOption) {
+          toolOption.value = "";
+          lastAutoOption = "";
+        }
+      };
+      const imageFields = [
+        imageRotate, imageFlipH, imageFlipV, imageBrightness, imageContrast,
+        imageSaturation, imageGrayscale, imageFormat, imageQuality
+      ];
+      const passwordFields = [
+        passLength, passCount, passLower, passUpper, passNumbers, passSymbols,
+        passSimilar, passAmbiguous, passRequire
+      ];
+      const qrFields = [
+        qrContent, qrFormat, qrSize, qrPadding, qrEcc, qrDot, qrColor,
+        qrCornerSquare, qrCornerSquareColor, qrCornerDot, qrCornerDotColor,
+        qrBg, qrImageType, qrImageUrl, qrImageSize, qrImageMargin, qrImageBgDots
+      ];
+      const seloFields = [seloKind, seloAction, seloUf, seloAuto, seloInput];
+      const imageSettings = () => ({
+        width: imageWidth.value,
+        height: imageHeight.value,
+        rotate: imageRotate.value,
+        flip_horizontal: imageFlipH.checked,
+        flip_vertical: imageFlipV.checked,
+        brightness: imageBrightness.value,
+        contrast: imageContrast.value,
+        saturation: imageSaturation.value,
+        grayscale: imageGrayscale.value,
+        format: imageFormat.value,
+        quality: imageQuality.value,
+        lock_ratio: imageRatioLock.checked
+      });
+      const applyImageSettings = (settings = {}) => {
+        if (settings.width) imageWidth.value = settings.width;
+        if (settings.height) imageHeight.value = settings.height;
+        imageRotate.value = settings.rotate || "0";
+        imageFlipH.checked = !!settings.flip_horizontal;
+        imageFlipV.checked = !!settings.flip_vertical;
+        imageBrightness.value = settings.brightness || "0";
+        imageContrast.value = settings.contrast || "100";
+        imageSaturation.value = settings.saturation || "100";
+        imageGrayscale.value = settings.grayscale || "0";
+        imageFormat.value = settings.format || "image/png";
+        imageQuality.value = settings.quality || "0.92";
+        imageRatioLock.checked = settings.lock_ratio !== false;
+      };
+      const passwordSettings = () => ({
+        auto: passAuto.checked,
+        remember: passRemember.checked,
+        length: passLength.value,
+        count: passCount.value,
+        lowercase: passLower.checked,
+        uppercase: passUpper.checked,
+        numbers: passNumbers.checked,
+        symbols: passSymbols.checked,
+        exclude_similar: passSimilar.checked,
+        exclude_ambiguous: passAmbiguous.checked,
+        require_each: passRequire.checked
+      });
+      const applyPasswordSettings = (settings = {}) => {
+        passAuto.checked = settings.auto !== false;
+        passRemember.checked = !!settings.remember;
+        passLength.value = settings.length || "16";
+        passCount.value = settings.count || "1";
+        passLower.checked = settings.lowercase !== false;
+        passUpper.checked = settings.uppercase !== false;
+        passNumbers.checked = settings.numbers !== false;
+        passSymbols.checked = settings.symbols !== false;
+        passSimilar.checked = !!settings.exclude_similar;
+        passAmbiguous.checked = !!settings.exclude_ambiguous;
+        passRequire.checked = settings.require_each !== false;
+      };
+      const qrSettings = () => ({
+        auto: qrAuto.checked,
+        remember: qrRemember.checked,
+        content: qrContent.value,
+        format: qrFormat.value,
+        size: qrSize.value,
+        padding: qrPadding.value,
+        ecc: qrEcc.value,
+        dot: qrDot.value,
+        color: qrColor.value,
+        corner_square: qrCornerSquare.value,
+        corner_square_color: qrCornerSquareColor.value,
+        corner_dot: qrCornerDot.value,
+        corner_dot_color: qrCornerDotColor.value,
+        background: qrBg.value,
+        image_type: qrImageType.value,
+        image_url: qrImageUrl.value,
+        image_size: qrImageSize.value,
+        image_margin: qrImageMargin.value,
+        show_background_dots: qrImageBgDots.checked
+      });
+      const applyQrSettings = (settings = {}) => {
+        qrAuto.checked = settings.auto !== false;
+        qrRemember.checked = !!settings.remember;
+        qrContent.value = settings.content || "https://dyammarcano.github.io/";
+        qrFormat.value = settings.format || "image/png";
+        qrSize.value = settings.size || "256";
+        qrPadding.value = settings.padding || "16";
+        qrEcc.value = settings.ecc || "Q";
+        qrDot.value = settings.dot || "square";
+        qrColor.value = settings.color || "#000000";
+        qrCornerSquare.value = settings.corner_square || "none";
+        qrCornerSquareColor.value = settings.corner_square_color || "#000000";
+        qrCornerDot.value = settings.corner_dot || "none";
+        qrCornerDotColor.value = settings.corner_dot_color || "#000000";
+        qrBg.value = settings.background || "#ffffff";
+        qrImageType.value = settings.image_type || "none";
+        qrImageUrl.value = settings.image_url || "";
+        qrImageSize.value = settings.image_size || "20";
+        qrImageMargin.value = settings.image_margin || "0";
+        qrImageBgDots.checked = !!settings.show_background_dots;
+      };
+      const seloSettings = () => ({
+        kind: seloKind.value || "cpf",
+        action: seloAction.value || "validate",
+        uf: seloUf.value || "SP",
+        input: seloInput.value,
+        auto: seloAuto.checked
+      });
+      const applySeloSettings = (settings = {}) => {
+        if (settings.kind) seloKind.value = settings.kind;
+        if (settings.action) seloAction.value = settings.action;
+        if (settings.uf) seloUf.value = settings.uf;
+        seloInput.value = settings.input || "";
+        seloAuto.checked = settings.auto !== false;
+      };
+      const groupSettings = () => ({
+        tool: groupTool.value,
+        input: groupInput.value,
+        option: groupOption.value,
+        auto: groupAuto.checked
+      });
+      const applyGroupSettings = (settings = {}) => {
+        if (settings.tool) setSelectValue(groupTool, settings.tool);
+        groupInput.value = settings.input || "";
+        groupOption.value = settings.option || "";
+        groupAuto.checked = settings.auto === true;
+      };
+      const readState = () => {
+        try {
+          return JSON.parse(localStorage.getItem(stateKey) || "null");
+        } catch {
+          return null;
+        }
+      };
+      const writeState = () => {
+        if (!toolStore.checked) return;
+        try {
+          localStorage.setItem(stateKey, JSON.stringify({
+            remember: true,
+            tool: localTool.value,
+            leaf: groupTool.value,
+            input: toolInput.value,
+            option: toolOption.value,
+            output: localTool.value === "password-generator" ? "" : activeOutput().textContent,
+            group: groupSettings(),
+            image: imageSettings(),
+            password: passwordSettings(),
+            qr: qrSettings(),
+            phone: { input: phoneInput.value, auto: phoneAuto.checked },
+            selo: seloSettings()
+          }));
+        } catch (error) {
+          toolStore.checked = false;
+          activeOutput().textContent = error && error.message ? error.message : "localStorage unavailable";
+        }
+      };
+      const restoreState = (api) => {
+        if (savedRestored || route.has("tool")) return;
+        savedRestored = true;
+        const state = readState();
+        if (!state || !state.remember) return;
+        restoredState = state;
+        restoredGroupPending = state.group || { tool: state.leaf, input: state.input, option: state.option, auto: false };
+        toolStore.checked = true;
+        if (state.tool) {
+          selectGroupForId(api, state.tool) || setSelectValue(localTool, state.tool);
+        }
+        toolInput.value = state.input || "";
+        toolOption.value = state.option || "";
+        groupInput.value = state.group && state.group.input || state.input || "";
+        groupOption.value = state.group && state.group.option || state.option || "";
+        groupAuto.checked = !!(state.group && state.group.auto);
+        toolOutput.textContent = state.tool === "image-editor" ? "ready" : state.output || "ready";
+        groupOutput.textContent = state.output || "ready";
+        imageOutput.textContent = state.tool === "image-editor" ? state.output || "ready" : "ready";
+        applyImageSettings(state.image);
+        applyPasswordSettings(state.password);
+        applyQrSettings(state.qr);
+        phoneInput.value = state.phone && state.phone.input || "";
+        phoneAuto.checked = !state.phone || state.phone.auto !== false;
+        applySeloSettings(state.selo);
+      };
+      const setImageInfo = (text) => { imageInfo.textContent = text; };
+      const revokeImageDownload = () => {
+        if (imageDownloadUrl) URL.revokeObjectURL(imageDownloadUrl);
+        imageDownloadUrl = undefined;
+        imageDownload.hidden = true;
+        imageDownload.removeAttribute("href");
+      };
+      const imageFormatName = (type) => type === "image/jpeg" ? "JPEG" : type === "image/webp" ? "WebP" : "PNG";
+      const formatBytes = (bytes) => {
+        if (bytes < 1024) return `${bytes} B`;
+        if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+        return `${(bytes / 1024 / 1024).toFixed(2)} MB`;
+      };
+      const imageQualityMeta = () => {
+        if (imageFormat.value === "image/png") {
+          return {
+            quality: null,
+            quality_note: "PNG is lossless; quality applies to JPEG/WebP"
+          };
+        }
+        return { quality: Number(imageQuality.value) };
+      };
+      const imageScaleMeta = (width, height) => {
+        if (!imageSourceWidth || !imageSourceHeight) return {};
+        return {
+          source_width: imageSourceWidth,
+          source_height: imageSourceHeight,
+          scale_width: Number((width / imageSourceWidth).toFixed(3)),
+          scale_height: Number((height / imageSourceHeight).toFixed(3))
+        };
+      };
+      const drawEncodedPreview = async (blob, width, height, token) => {
+        if (!/^image\/(jpeg|webp)$/.test(blob.type) || !window.createImageBitmap) return;
+        try {
+          const bitmap = await createImageBitmap(blob);
+          if (token !== imagePreviewSeq) {
+            if (bitmap.close) bitmap.close();
+            return;
+          }
+          const context = imageCanvas.getContext("2d", { alpha: blob.type !== "image/jpeg" });
+          context.clearRect(0, 0, width, height);
+          context.drawImage(bitmap, 0, 0, width, height);
+          if (bitmap.close) bitmap.close();
+        } catch {
+          // Some browsers cannot decode a just-created WebP/JPEG blob here; export still works.
+        }
+      };
+      const previewImage = async () => {
+        if (imagePreviewTimer) {
+          clearTimeout(imagePreviewTimer);
+          imagePreviewTimer = undefined;
+        }
+        const token = ++imagePreviewSeq;
+        if (!imageFile.files.length) {
+          setImageInfo("choose an image");
+          return;
+        }
+        const api = await local();
+        const result = api.renderImage(imageCanvas, imageSettings());
+        const type = imageFormat.value;
+        const quality = Number(imageQuality.value);
+        setImageInfo(`${imageSourceName} -> ${result.width}x${result.height} · rendering`);
+        const blob = await api.exportImage(imageCanvas, type, quality);
+        if (token !== imagePreviewSeq) return;
+        revokeImageDownload();
+        imageDownloadUrl = URL.createObjectURL(blob);
+        imageDownload.href = imageDownloadUrl;
+        imageDownload.download = api.imageFilename(imageSourceName, type);
+        imageDownload.hidden = false;
+        await drawEncodedPreview(blob, result.width, result.height, token);
+        if (token !== imagePreviewSeq) return;
+        const meta = {
+          file: imageDownload.download,
+          format: blob.type || type,
+          bytes: blob.size,
+          width: result.width,
+          height: result.height,
+          ...imageScaleMeta(result.width, result.height),
+          ...imageQualityMeta(),
+          live: true
+        };
+        imageOutput.textContent = JSON.stringify(meta, null, 2);
+        const scaleText = imageSourceWidth
+          ? ` · ${Math.round(result.width / imageSourceWidth * 100)}%w/${Math.round(result.height / imageSourceHeight * 100)}%h`
+          : "";
+        const qualityText = type === "image/png" ? "lossless" : `q${quality.toFixed(2)}`;
+        setImageInfo(`${imageSourceName} -> ${result.width}x${result.height}${scaleText} · ${imageFormatName(type)} ${qualityText} · ${formatBytes(blob.size)}`);
+        writeState();
+      };
+      const scheduleImagePreview = () => {
+        if (imagePreviewTimer) clearTimeout(imagePreviewTimer);
+        imagePreviewTimer = setTimeout(() => {
+          imagePreviewTimer = undefined;
+          previewImage().catch(error => { imageOutput.textContent = error.message || String(error); });
+        }, 90);
+      };
+      const loadImageFile = async () => {
+        const file = imageFile.files[0];
+        if (!file) return;
+        const api = await local();
+        const meta = await api.loadImage(file);
+        imageSourceName = meta.name;
+        imageSourceWidth = meta.width;
+        imageSourceHeight = meta.height;
+        imageRatio = meta.width / meta.height || 1;
+        imageWidth.value = meta.width;
+        imageHeight.value = meta.height;
+        imageOutput.textContent = JSON.stringify(meta, null, 2);
+        await previewImage();
+      };
+      const exportCurrentImage = async () => {
+        if (!imageFile.files.length) throw new Error("Choose an image file first");
+        await previewImage();
+      };
+      const revokeQrDownload = () => {
+        if (qrDownloadUrl) URL.revokeObjectURL(qrDownloadUrl);
+        qrDownloadUrl = undefined;
+        qrDownload.hidden = true;
+        qrDownload.removeAttribute("href");
+      };
+      const clearCanvas = (canvas) => {
+        const context = canvas.getContext("2d");
+        context.clearRect(0, 0, canvas.width, canvas.height);
+      };
+      const resetToolOutputs = () => {
+        if (imagePreviewTimer) {
+          clearTimeout(imagePreviewTimer);
+          imagePreviewTimer = undefined;
+        }
+        imagePreviewSeq += 1;
+        toolOutput.textContent = "ready";
+        groupOutput.textContent = "ready";
+        imageOutput.textContent = "ready";
+        passOutput.textContent = "ready";
+        qrOutput.textContent = "ready";
+        phoneOutput.textContent = "ready";
+        seloOutput.textContent = "ready";
+        imageInfo.textContent = "choose an image";
+        qrInfo.textContent = "ready";
+        revokeImageDownload();
+        revokeQrDownload();
+        clearCanvas(imageCanvas);
+        clearCanvas(qrCanvas);
+        groupResults.replaceChildren(groupOutput);
+        phoneResults.replaceChildren(phoneOutput);
+        seloResults.replaceChildren(seloOutput);
+      };
+      const generatePassword = async () => {
+        const api = await local();
+        passOutput.textContent = await api.generatePassword(passwordSettings());
+        if (passRemember.checked) {
+          toolStore.checked = true;
+          writeState();
+        }
+      };
+      const previewQr = async () => {
+        const api = await local();
+        const meta = await api.renderQr(qrCanvas, qrSettings());
+        revokeQrDownload();
+        qrInfo.textContent = `${meta.canvas_size}x${meta.canvas_size} · ${meta.version_size} modules · ECC ${meta.error_correction}`;
+        qrOutput.textContent = JSON.stringify(meta, null, 2);
+        if (qrRemember.checked) {
+          toolStore.checked = true;
+          writeState();
+        }
+      };
+      const exportQr = async () => {
+        const api = await local();
+        await previewQr();
+        const blob = await api.exportQr(qrCanvas, qrFormat.value, 0.92);
+        revokeQrDownload();
+        qrDownloadUrl = URL.createObjectURL(blob);
+        qrDownload.href = qrDownloadUrl;
+        qrDownload.download = api.qrFilename(qrFormat.value);
+        qrDownload.hidden = false;
+        qrOutput.textContent = JSON.stringify({
+          file: qrDownload.download,
+          format: blob.type,
+          bytes: blob.size,
+          size: qrCanvas.width
+        }, null, 2);
+        if (qrRemember.checked) {
+          toolStore.checked = true;
+          writeState();
+        }
+      };
+      const rawDetails = (data) => {
+        const details = mk("details", "raw-details");
+        const summary = mk("summary", "", "Raw data");
+        const pre = mk("pre", "tool-output", typeof data === "string" ? data : JSON.stringify(data, null, 2));
+        details.append(summary, pre);
+        return details;
+      };
+      const kvList = (pairs) => {
+        const list = mk("dl", "result-kv");
+        pairs
+          .filter(([, value]) => value !== undefined && value !== null && value !== "")
+          .forEach(([label, value]) => {
+            list.append(mk("dt", "", label), mk("dd", "", String(value)));
+          });
+        return list;
+      };
+      const resultCard = (result) => {
+        const card = mk("article", `result-card ${result.valid === false ? "bad" : "ok"}`);
+        const title = mk("div", "result-title");
+        title.append(
+          mk("h3", "", result.summary || result.label || "Result"),
+          mk("span", "result-status", result.valid === false ? "invalid" : "valid")
+        );
+        card.append(title);
+        card.append(kvList([
+          ["Document", result.label],
+          ["Value", result.formatted || result.input],
+          ["Origin", result.origin],
+          ["PIX kind", result.pix_kind],
+          ["Action", result.action]
+        ]));
+        if (Array.isArray(result.details) && result.details.length) {
+          const details = mk("ul", "detail-list");
+          result.details.forEach(item => details.append(mk("li", "", item)));
+          card.append(details);
+        }
+        return card;
+      };
+      const personCard = (result) => {
+        const person = result.person || {};
+        const card = mk("article", "result-card ok person-card");
+        const title = mk("div", "result-title");
+        title.append(mk("h3", "", result.summary || "Generated synthetic person"), mk("span", "result-status", "valid"));
+        card.append(title);
+        card.append(kvList([
+          ["Name", person.name],
+          ["Email", person.email],
+          ["UF", person.uf],
+          ["CPF", person.cpf],
+          ["RG", person.rg],
+          ["IE", person.ie],
+          ["CNH", person.cnh],
+          ["PIS", person.pis],
+          ["RENAVAM", person.renavam],
+          ["Voter ID", person.voter_id],
+          ["CNS", person.cns],
+          ["CEP", person.cep],
+          ["Phone", person.phone],
+          ["Vehicle", person.vehicle ? `${person.vehicle.plate} / ${person.vehicle.renavam}` : ""],
+          ["Company", person.company ? `${person.company.name} / ${person.company.cnpj}` : ""]
+        ]));
+        if (Array.isArray(person.pix_keys)) {
+          const pills = mk("div", "doc-pills");
+          person.pix_keys.forEach(value => pills.append(mk("span", "doc-pill", value)));
+          card.append(pills);
+        }
+        return card;
+      };
+      const phoneCard = (result) => {
+        const card = mk("article", "phone-card");
+        const flag = document.createElement("img");
+        flag.src = result.flag;
+        flag.alt = "";
+        flag.loading = "lazy";
+        const body = mk("div");
+        body.append(
+          mk("span", "phone-kind", result.kind),
+          mk("h3", "", result.title),
+          mk("p", "", result.subtitle),
+          mk("p", "", `${result.code} · ${result.source}`)
+        );
+        card.append(flag, body);
+        return card;
+      };
+      const phoneSummaryCard = (lookup) => {
+        if (!lookup.formatted_query && !lookup.e164) return null;
+        const card = mk("article", "result-card ok");
+        const title = mk("div", "result-title");
+        title.append(mk("h3", "", lookup.e164 ? `${lookup.e164.slice(0, 3)} ${lookup.formatted_query}` : lookup.formatted_query), mk("span", "result-status", "formatted"));
+        card.append(title);
+        card.append(kvList([
+          ["National", lookup.formatted_query],
+          ["E.164", lookup.e164],
+          ["DDD", lookup.national_phone ? lookup.national_phone.slice(0, 2) : ""],
+          ["UF", lookup.phone_uf]
+        ]));
+        return card;
+      };
+      const runPhoneLookup = async () => {
+        phoneResults.replaceChildren(phoneOutput);
+        const api = await local();
+        const lookup = await api.identifyPhone(phoneInput.value);
+        if (lookup.formatted_query) {
+          phoneInput.value = lookup.e164 ? `${lookup.e164.slice(0, 3)} ${lookup.formatted_query}` : lookup.formatted_query;
+        }
+        phoneOutput.textContent = JSON.stringify(lookup, null, 2);
+        const summary = phoneSummaryCard(lookup);
+        const cards = lookup.results.length
+          ? lookup.results.map(phoneCard)
+          : [mk("p", "tool-empty", "no phone code match")];
+        phoneResults.replaceChildren(...[summary].filter(Boolean), ...cards, rawDetails(lookup));
+        writeState();
+      };
+      const renderSeloResult = (result) => {
+        seloOutput.textContent = JSON.stringify(result, null, 2);
+        const main = result.person ? personCard(result) : resultCard(result);
+        seloResults.replaceChildren(main, rawDetails(result));
+      };
+      const runBrDocument = async () => {
+        seloResults.replaceChildren(seloOutput);
+        const api = await local();
+        const result = await api.runBrDocument(seloSettings());
+        renderSeloResult(result);
+        writeState();
+      };
+      const syncLocal = async () => {
+        const api = await local();
+        if (!localTool.options.length) {
+          localTool.replaceChildren(...api.toolGroups.map(group => {
+            const option = document.createElement("option");
+            option.value = group.id;
+            option.textContent = group.label;
+            return option;
+          }));
+        }
+        if (!seloKind.options.length) {
+          seloKind.replaceChildren(...api.seloKinds.map(kind => {
+            const option = document.createElement("option");
+            option.value = kind.id;
+            option.textContent = kind.label;
+            option.dataset.sample = kind.sample || "";
+            return option;
+          }));
+          seloAction.replaceChildren(...api.seloActions.map(action => {
+            const option = document.createElement("option");
+            option.value = action.id;
+            option.textContent = action.label;
+            return option;
+          }));
+          seloUf.replaceChildren(...api.brazilUfs.map(uf => {
+            const option = document.createElement("option");
+            option.value = uf.code;
+            option.textContent = `${uf.code} - ${uf.name}`;
+            return option;
+          }));
+        }
+        count.textContent = `${api.toolGroups.length} groups / ${api.tools.length} tools`;
+        restoreState(api);
+
+        const group = selectedLocal(api);
+        if (group.mode === "group") {
+          const previousLeaf = groupTool.value;
+          const leaves = group.tools.map(id => api.findTool(id)).filter(Boolean);
+          groupTool.replaceChildren(...leaves.map(leaf => {
+            const option = document.createElement("option");
+            option.value = leaf.id;
+            option.textContent = leaf.label;
+            return option;
+          }));
+          if (!setSelectValue(groupTool, previousLeaf)) groupTool.value = leaves[0] && leaves[0].id || "";
+          groupToolField.hidden = leaves.length <= 1;
+        }
+        if (restoredGroupPending && group.mode === "group") {
+          applyGroupSettings(restoredGroupPending);
+          restoredGroupPending = undefined;
+        }
+
+        const leaf = selectedLeaf(api, group);
+        const changedGroup = !!activeGroupId && activeGroupId !== group.id;
+        const changedLeaf = !!activeLeafId && activeLeafId !== leaf.id;
+        activeGroupId = group.id;
+        activeLeafId = leaf.id;
+
+        const groupMode = group.mode === "group";
+        const imageMode = group.mode === "image";
+        const passwordMode = group.mode === "password";
+        const qrMode = group.mode === "qr";
+        const phoneMode = group.mode === "phone";
+        const seloMode = group.mode === "selo";
+        const generateMode = leaf.mode === "generate";
+        if (changedGroup || changedLeaf) resetToolOutputs();
+
+        if (groupMode) {
+          const canSample = leaf.mode === "input" && leaf.sample;
+          if (canSample && (changedGroup || changedLeaf || !groupInput.value || groupInput.value === lastAutoGroupInput)) {
+            groupInput.value = leaf.sample;
+            lastAutoGroupInput = leaf.sample;
+          } else if (generateMode && (changedGroup || changedLeaf || groupInput.value === lastAutoGroupInput)) {
+            groupInput.value = "";
+            lastAutoGroupInput = "";
+          }
+          if (leaf.option) {
+            const defaultOption = leaf.optionDefault || "";
+            if (defaultOption && (changedGroup || changedLeaf || !groupOption.value || groupOption.value === lastAutoGroupOption)) {
+              groupOption.value = defaultOption;
+              lastAutoGroupOption = defaultOption;
+            }
+          } else if (changedGroup || changedLeaf || groupOption.value === lastAutoGroupOption) {
+            groupOption.value = "";
+            lastAutoGroupOption = "";
+          }
+          groupInputField.hidden = generateMode;
+          groupInput.disabled = generateMode;
+          groupInputLabel.textContent = "Value";
+          groupInput.placeholder = generateMode ? "no input needed" : "input";
+          groupOptionField.hidden = !leaf.option;
+          groupOptionLabel.textContent = leaf.optionLabel || leaf.option || "Option";
+          groupOption.placeholder = leaf.optionPlaceholder || "";
+          groupOptionHelp.hidden = !leaf.optionHelp;
+          groupOptionHelp.textContent = leaf.optionHelp || "";
+        }
+
+        if (phoneMode && (changedGroup || !phoneInput.value || phoneInput.value === lastAutoPhone)) {
+          phoneInput.value = "+55 (11) 93039-0628";
+          lastAutoPhone = phoneInput.value;
+        }
+        if (seloMode) {
+          if (seloKind.value === "person" && seloAction.value !== "generate") seloAction.value = "generate";
+          if (seloKind.value === "auto" && seloAction.value === "generate") seloAction.value = "detect";
+          const actionNeedsInput = seloAction.value !== "generate";
+          const sample = seloKind.selectedOptions[0] && seloKind.selectedOptions[0].dataset.sample || "";
+          if (actionNeedsInput && (changedGroup || !seloInput.value || seloInput.value === lastAutoSelo)) {
+            seloInput.value = sample;
+            lastAutoSelo = sample;
+          } else if (!actionNeedsInput && (changedGroup || seloInput.value === lastAutoSelo)) {
+            seloInput.value = "";
+            lastAutoSelo = "";
+          }
+          seloInputField.hidden = !actionNeedsInput;
+        }
+
+        textPanel.hidden = true;
+        groupPanel.hidden = !groupMode;
+        imagePanel.hidden = !imageMode;
+        passwordPanel.hidden = !passwordMode;
+        qrPanel.hidden = !qrMode;
+        phonePanel.hidden = !phoneMode;
+        seloPanel.hidden = !seloMode;
+        toolOptionWrap.hidden = true;
+        toolOrigin.textContent = leaf.origin || group.origin;
+        toolHint.textContent = leaf.hint || group.hint;
+        toolExplain.hidden = !leaf.explain;
+        toolExplainText.textContent = leaf.explain || "";
+        toolRun.textContent = imageMode ? "Export" : passwordMode || qrMode ? "Generate" : phoneMode ? "Lookup" : seloMode ? seloAction.selectedOptions[0]?.textContent || "Run" : generateMode ? "Generate" : "Run";
+        if (passwordMode && passRemember.checked) toolStore.checked = true;
+        if (qrMode && qrRemember.checked) toolStore.checked = true;
+        if (!activeOutput().textContent) activeOutput().textContent = "ready";
+      };
+      const runLocal = async () => {
+        const api = await local();
+        const group = selectedLocal(api);
+        const leaf = selectedLeaf(api, group);
+        toolRun.disabled = true;
+        activeOutput().textContent = "running...";
+        try {
+          if (group.mode === "image") await exportCurrentImage();
+          else if (group.mode === "password") await generatePassword();
+          else if (group.mode === "qr") await exportQr();
+          else if (group.mode === "phone") await runPhoneLookup();
+          else if (group.mode === "selo") await runBrDocument();
+          else {
+            groupResults.replaceChildren(groupOutput);
+            groupOutput.textContent = await api.runTool(leaf.id, groupInput.value, groupOption.value);
+          }
+          writeState();
+        } catch (error) {
+          activeOutput().textContent = error && error.message ? error.message : String(error);
+        } finally {
+          toolRun.disabled = false;
+        }
+      };
+      const selectLocal = async (id, input, option, autorun) => {
+        const api = await local();
+        if (!localTool.options.length) {
+          localTool.replaceChildren(...api.toolGroups.map(group => {
+            const item = document.createElement("option");
+            item.value = group.id;
+            item.textContent = group.label;
+            return item;
+          }));
+        }
+        const requestedLeaf = api.findTool(id) ? id : route.get("op") || route.get("leaf");
+        if (id) selectGroupForId(api, id);
+        await syncLocal();
+        if (requestedLeaf && selectedLocal(api).mode === "group" && setSelectValue(groupTool, requestedLeaf)) {
+          await syncLocal();
+        }
+        if (input !== null && input !== undefined) {
+          if (localTool.value === "qr-generator") qrContent.value = input;
+          else if (localTool.value === "phone-code-identifier") phoneInput.value = input;
+          else if (localTool.value === "br-document-toolkit") seloInput.value = input;
+          else if (!groupPanel.hidden) groupInput.value = input;
+          else toolInput.value = input;
+        }
+        if (localTool.value === "br-document-toolkit") {
+          const routeKind = route.get("kind");
+          const routeAction = route.get("action") || option;
+          const routeUf = route.get("uf");
+          if (routeKind) setSelectValue(seloKind, routeKind);
+          if (routeAction) setSelectValue(seloAction, routeAction);
+          if (routeUf) setSelectValue(seloUf, routeUf.toUpperCase());
+          await syncLocal();
+        } else if (!groupPanel.hidden && option !== null && option !== undefined) {
+          groupOption.value = option;
+        } else if (option !== null && option !== undefined) {
+          toolOption.value = option;
+        }
+        if (autorun) await runLocal();
+        writeState();
+      };
+      const lockPageScroll = () => {
+        document.documentElement.style.overflow = "hidden";
+        document.body.style.overflow = "hidden";
+      };
+      const unlockPageScroll = () => {
+        document.documentElement.style.overflow = "";
+        document.body.style.overflow = "";
+      };
+      const open = async () => {
+        if (!modal.open) modal.showModal();
+        lockPageScroll();
+        await syncLocal();
+        localTool.focus();
+      };
+      const close = () => { if (modal.open) modal.close(); unlockPageScroll(); };
+      document.querySelector("[data-geek-open]").addEventListener("click", () => {
+        open().catch(error => { activeOutput().textContent = error.message || String(error); });
+      });
+      document.querySelector("[data-geek-close]").addEventListener("click", close);
+      localTool.addEventListener("change", () => {
+        syncLocal()
+          .then(writeState)
+          .catch(error => { activeOutput().textContent = error.message || String(error); });
+      });
+      toolInput.addEventListener("input", writeState);
+      toolOption.addEventListener("input", writeState);
+      [groupTool, groupInput, groupOption, groupAuto].forEach(field => field.addEventListener("input", () => {
+        syncLocal()
+          .then(() => {
+            if (groupAuto.checked && !groupPanel.hidden) return runLocal();
+            writeState();
+          })
+          .catch(error => { groupOutput.textContent = error.message || String(error); });
+      }));
+      [groupTool, groupInput, groupOption, groupAuto].forEach(field => field.addEventListener("change", () => {
+        syncLocal()
+          .then(() => {
+            if (groupAuto.checked && !groupPanel.hidden) return runLocal();
+            writeState();
+          })
+          .catch(error => { groupOutput.textContent = error.message || String(error); });
+      }));
+      imageFile.addEventListener("change", () => { loadImageFile().catch(error => { imageOutput.textContent = error.message || String(error); }); });
+      imageWidth.addEventListener("input", () => {
+        if (imageRatioLock.checked && imageRatio) imageHeight.value = Math.max(1, Math.round(Number(imageWidth.value || 1) / imageRatio));
+        scheduleImagePreview();
+      });
+      imageHeight.addEventListener("input", () => {
+        if (imageRatioLock.checked && imageRatio) imageWidth.value = Math.max(1, Math.round(Number(imageHeight.value || 1) * imageRatio));
+        scheduleImagePreview();
+      });
+      imageFields.forEach(field => field.addEventListener("input", scheduleImagePreview));
+      imageFields.forEach(field => field.addEventListener("change", scheduleImagePreview));
+      imageRatioLock.addEventListener("change", writeState);
+      passwordFields.forEach(field => field.addEventListener("input", () => {
+        if (passAuto.checked) generatePassword().catch(error => { passOutput.textContent = error.message || String(error); });
+        else if (passRemember.checked) { toolStore.checked = true; writeState(); }
+      }));
+      passwordFields.forEach(field => field.addEventListener("change", () => {
+        if (passAuto.checked) generatePassword().catch(error => { passOutput.textContent = error.message || String(error); });
+        else if (passRemember.checked) { toolStore.checked = true; writeState(); }
+      }));
+      passAuto.addEventListener("change", () => {
+        if (passAuto.checked) generatePassword().catch(error => { passOutput.textContent = error.message || String(error); });
+        if (passRemember.checked) { toolStore.checked = true; writeState(); }
+      });
+      passRemember.addEventListener("change", () => {
+        toolStore.checked = passRemember.checked;
+        if (passRemember.checked) writeState();
+      });
+      qrFields.forEach(field => field.addEventListener("input", () => {
+        if (qrAuto.checked) previewQr().catch(error => { qrOutput.textContent = error.message || String(error); });
+        else if (qrRemember.checked) { toolStore.checked = true; writeState(); }
+      }));
+      qrFields.forEach(field => field.addEventListener("change", () => {
+        if (qrAuto.checked) previewQr().catch(error => { qrOutput.textContent = error.message || String(error); });
+        else if (qrRemember.checked) { toolStore.checked = true; writeState(); }
+      }));
+      qrAuto.addEventListener("change", () => {
+        if (qrAuto.checked) previewQr().catch(error => { qrOutput.textContent = error.message || String(error); });
+        if (qrRemember.checked) { toolStore.checked = true; writeState(); }
+      });
+      qrRemember.addEventListener("change", () => {
+        toolStore.checked = qrRemember.checked;
+        if (qrRemember.checked) writeState();
+      });
+      phoneInput.addEventListener("input", () => {
+        if (phoneAuto.checked) runPhoneLookup().catch(error => { phoneOutput.textContent = error.message || String(error); });
+        else writeState();
+      });
+      phoneInput.addEventListener("blur", () => {
+        local()
+          .then(api => api.formatPhoneInput(phoneInput.value))
+          .then(value => { if (value && value !== phoneInput.value) phoneInput.value = value.startsWith("(") ? `+55 ${value}` : value; })
+          .catch(() => {});
+      });
+      phoneAuto.addEventListener("change", () => {
+        if (phoneAuto.checked) runPhoneLookup().catch(error => { phoneOutput.textContent = error.message || String(error); });
+        writeState();
+      });
+      seloFields.forEach(field => field.addEventListener("input", () => {
+        syncLocal()
+          .then(() => {
+            if (seloAuto.checked) return runBrDocument();
+            writeState();
+          })
+          .catch(error => { seloOutput.textContent = error.message || String(error); });
+      }));
+      seloFields.forEach(field => field.addEventListener("change", () => {
+        syncLocal()
+          .then(() => {
+            if (seloAuto.checked) return runBrDocument();
+            writeState();
+          })
+          .catch(error => { seloOutput.textContent = error.message || String(error); });
+      }));
+      toolStore.addEventListener("change", () => {
+        if (toolStore.checked) writeState();
+        else {
+          try { localStorage.removeItem(stateKey); } catch {}
+          if (!passwordPanel.hidden) passRemember.checked = false;
+          if (!qrPanel.hidden) qrRemember.checked = false;
+        }
+      });
+      toolRun.addEventListener("click", runLocal);
+      modal.addEventListener("click", e => { if (e.target === modal) close(); });
+      modal.addEventListener("close", unlockPageScroll);
+      return Object.freeze({ open, close, runLocal, selectLocal });
+    })();
+    window.geekTools = geekTools;
+    {
+      const route = new URLSearchParams(window.location.search);
+      if (route.get("geek") === "1" || route.has("tool")) {
+        geekTools.open()
+          .then(() => geekTools.selectLocal(route.get("tool"), route.get("input"), route.get("option"), route.get("run") === "1"));
+      }
+    }
   </script>
 </body>
 </html>
